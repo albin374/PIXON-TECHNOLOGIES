@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIXON TECHNOLOGIES | Smart Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #020813;
+      --text-color: #f0ece4;
+      --accent-color: #3b82f6;
+      /* Luxury Blue Theme */
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Noise & Vignette Overlays */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+    }
+
+    .vignette-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9998;
+      background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 100%);
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-color);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease;
+    }
+
+    .loader-text {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .progress-track {
+      width: 200px;
+      height: 1px;
+      background: rgba(240, 236, 228, 0.2);
+    }
+
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-color);
+      transition: width 0.1s linear;
+      box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      z-index: 1000;
+      mix-blend-mode: difference;
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 1rem 2.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--accent-color);
+      color: var(--text-color);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: rgba(59, 130, 246, 0.1);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Animation Section */
+    #animation-container {
+      height: 500vh;
+      position: relative;
+    }
+
+    #sticky-container {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Overlays */
+    .scroll-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      will-change: opacity;
+    }
+
+    .headline {
+      font-family: var(--font-display);
+      font-size: 5vw;
+      font-weight: 400;
+      text-align: center;
+      background: linear-gradient(to bottom, var(--text-color), var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      font-size: 2vw;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    .specs-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      will-change: opacity;
+    }
+
+    .spec-item {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .spec-item.left {
+      flex-direction: row-reverse;
+    }
+
+    .spec-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent-color);
+      box-shadow: 0 0 5px var(--accent-color);
+    }
+
+    .spec-text {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      max-width: 200px;
+      line-height: 1.4;
+      color: #cbd5e1;
+    }
+
+    .spec-text strong {
+      color: var(--text-color);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    /* Positioning Specs */
+    .spec-1 {
+      top: 25%;
+      left: 10%;
+    }
+
+    .spec-2 {
+      top: 40%;
+      left: 15%;
+    }
+
+    .spec-3 {
+      top: 55%;
+      left: 8%;
+    }
+
+    .spec-4 {
+      top: 75%;
+      left: 12%;
+    }
+
+    .spec-5 {
+      top: 30%;
+      right: 12%;
+    }
+
+    .spec-6 {
+      top: 50%;
+      right: 8%;
+    }
+
+    .spec-7 {
+      top: 65%;
+      right: 15%;
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      opacity: 1;
+      will-change: opacity;
+    }
+
+    .scroll-text {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent-color), transparent);
+    }
+
+    /* Content Sections */
+    .content-section {
+      padding: 10rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+      position: relative;
+    }
+
+    .content-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .divider {
+      width: 1px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 0 auto;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .section-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #94a3b8;
+      font-weight: 300;
+    }
+
+    .highlight-text {
+      color: #3b82f6;
+      font-weight: 500;
+    }
+
+    .quote-section {
+      text-align: center;
+      padding: 8rem 2rem;
+    }
+
+    .quote {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-style: italic;
+      color: #f0ece4;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      line-height: 1.4;
+    }
+
+    .quote-author {
+      font-size: 0.85rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent-color);
+    }
+
+    .final-cta {
+      text-align: center;
+      padding: 8rem 2rem 12rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .specs-overlay {
+        display: none;
+      }
+
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        padding: 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .headline {
+        font-size: 12vw;
+      }
+
+      .tagline {
+        font-size: 4vw;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SVG Noise Filter -->
+  <svg width="0" height="0" style="display:none;">
+    <filter id="noiseFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0" />
+    </filter>
+  </svg>
+  <div class="noise-overlay"
+    style="background: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');">
+  </div>
+  <div class="vignette-overlay"></div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="loader-text">PIXON </div>
+    <div class="progress-track">
+      <div id="progress-bar"></div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="brand">PIXON</div>
+    <div class="nav-links">
+      <div>Design</div>
+      <div>Intelligence</div>
+      <div>Specs</div>
+    </div>
+  </nav>
+
+  <div id="animation-container">
+    <div id="sticky-container">
+      <canvas id="hero-canvas"></canvas>
+
+      <!-- 0-20% Overlay -->
+      <div id="overlay-intro" class="scroll-overlay">
+        <h1 class="headline">Presence, redefined.</h1>
+      </div>
+
+      <!-- 25-45% Overlay -->
+      <div id="overlay-mid" class="scroll-overlay">
+        <h2 class="tagline">Art meets intelligence.</h2>
+      </div>
+
+      <!-- 70-90% Specs Overlay -->
+      <div id="overlay-specs" class="specs-overlay">
+        <div class="spec-item spec-1 left">
+          <div class="spec-line"></div>
+          <div class="spec-text"><strong>Display Glass</strong>Tempered anti-glare, micro-etched</div>
+        </div>
+        <div class="spec-item spec-2 left">
+          <div class="spec-line"></div>
+          <div class="spec-text"><strong>Bezel Frame</strong>Precision-machined aluminum</div>
+        </div>
+        <div class="spec-item spec-3 left">
+          <div class="spec-line"></div>
+          <div class="spec-text"><strong>LED Matrix</strong>With electric teal status ring</div>
+        </div>
+        <div class="spec-item spec-4 left">
+          <div class="spec-line"></div>
+          <div class="spec-text"><strong>Logic Board</strong>Smart home SoC integration</div>
+        </div>
+
+        <div class="spec-item spec-5 right">
+          <div class="spec-line"></div>
+          <div class="spec-text"><strong>Speaker Grille</strong>Anodized aluminum mesh</div>
+        </div>
+        <div class="spec-item spec-6 right">
+          <div class="spec-line"></div>
+          <div class="spec-text"><strong>Rear Backing</strong>Premium Alcantara panel</div>
+        </div>
+        <div class="spec-item spec-7 right">
+          <div class="spec-line"></div>
+          <div class="spec-text"><strong>Mount</strong>Magnetic wall-mount base plate</div>
+        </div>
+      </div>
+
+      <!-- 88-100% Overlay -->
+      <div id="overlay-cta" class="scroll-overlay">
+        <a href="#discover" class="btn pointer-auto">Discover Pixon</a>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div id="scroll-indicator" class="scroll-indicator">
+        <div class="scroll-text">Scroll to explore</div>
+        <div class="scroll-line"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="content-section" id="discover">
+    <div class="grid-container">
+      <div>
+        <h3 class="section-title">A Symphony of Materials</h3>
+        <p class="section-text">
+          Crafted to merge seamlessly into your sanctuary. Pixon isn't just a smart display—it's a kinetic sculpture.
+          Encased in an <span class="highlight-text">anodized aluminum deep charcoal chassis</span> with a soft
+          Alcantara back, it speaks the language of contemporary luxury.
+        </p>
+      </div>
+      <div>
+        <!-- Placeholder for structural balance -->
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="content-section">
+    <div class="grid-container">
+      <div>
+        <!-- Placeholder for structural balance -->
+      </div>
+      <div>
+        <h3 class="section-title">Silent Intelligence</h3>
+        <p class="section-text">
+          A perfectly square <span class="highlight-text">180mm × 180mm × 14mm</span> face with softly chamfered
+          perimeters. Look closely at the lower-right corner of the bezel: a small robot silhouette, laser-etched into
+          the glass, awakens and breathes in electric teal when Pixon awaits your command.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="content-section quote-section">
+    <p class="quote">"Technology should calm the room, not clutter it. It should be felt before it is seen."</p>
+    <div class="quote-author">The Design Philosophy</div>
+  </section>
+
+  <section class="content-section final-cta">
+    <h3 class="section-title">Bring Pixon Home.</h3>
+    <a href="#" class="btn">Reserve Now</a>
+  </section>
+
+  <script>
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    const frames = [];
+    let totalFrames = 0;
+
+    // Resize canvas
+    function resizeCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      ctx.scale(dpr, dpr);
+      renderFrame(Math.floor((1 - getScrollProgress()) * (totalFrames - 1)));
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    // Dynamic frame loading detection
+    async function preloadFrames() {
+      let index = 1;
+      let loading = true;
+      let maxFailures = 3; // Tolerance for skipped frames
+      let failures = 0;
+      let batchSize = 5; // Load in small batches to test existence quickly, but we will do sequential for accurate count
+
+      const progressBar = document.getElementById('progress-bar');
+
+      while (loading && index < 600) {
+        const paddedIndex = index.toString().padStart(3, '0');
+        const imgPath = `Smart_display_frames/Smart_display_${paddedIndex}.png`;
+
+        try {
+          const img = await new Promise((resolve, reject) => {
+            const image = new Image();
+            image.onload = () => resolve(image);
+            image.onerror = () => reject();
+            image.src = imgPath;
+          });
+
+          frames.push(img);
+          failures = 0;
+
+          // Fake progress based on an assumed 120 frames
+          let prog = Math.min((frames.length / 120) * 100, 95);
+          progressBar.style.width = `${prog}%`;
+
+        } catch (e) {
+          failures++;
+          if (failures >= maxFailures) {
+            loading = false;
+          }
+        }
+        index++;
+      }
+
+      totalFrames = frames.length;
+      progressBar.style.width = `100%`;
+
+      if (totalFrames === 0) {
+        console.warn("No frames loaded. Ensure files are named Smart_display_001.png, Smart_display_002.png, etc. in the same directory.");
+        // We push a dummy to avoid breaking
+        totalFrames = 1;
+      }
+
+      setTimeout(() => {
+        document.getElementById('loader').style.opacity = 0;
+        setTimeout(() => document.getElementById('loader').style.display = 'none', 1000);
+        resizeCanvas(); // Initial setup
+        requestAnimationFrame(updateAnimation);
+      }, 500);
+    }
+
+    // Scroll calculations
+    function getScrollProgress() {
+      const animationContainer = document.getElementById('animation-container');
+      const scrollTop = window.scrollY - animationContainer.offsetTop;
+      const maxScroll = animationContainer.scrollHeight - window.innerHeight;
+      let progress = scrollTop / maxScroll;
+      return Math.max(0, Math.min(1, progress)); // Clamp 0-1
+    }
+
+    // Render frame
+    function renderFrame(frameIndex) {
+      if (totalFrames === 0 || !frames[frameIndex]) return;
+
+      const img = frames[frameIndex];
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      // Background fill to prevent flicker
+      ctx.fillStyle = '#020813';
+      ctx.fillRect(0, 0, w, h);
+
+      // Calculate aspect ratio cover
+      const imgRatio = img.width / img.height;
+      const canvasRatio = w / h;
+
+      let drawW, drawH, drawX, drawY;
+
+      if (canvasRatio > imgRatio) {
+        drawW = w;
+        drawH = w / imgRatio;
+        drawX = 0;
+        drawY = (h - drawH) / 2;
+      } else {
+        drawW = h * imgRatio;
+        drawH = h;
+        drawX = (w - drawW) / 2;
+        drawY = 0;
+      }
+
+      ctx.drawImage(img, drawX, drawY, drawW, drawH);
+    }
+
+    // Animation loop
+    let lastRenderedFrame = -1;
+    let ticking = false;
+
+    function updateAnimation() {
+      const progress = getScrollProgress();
+
+      // Reverse playback: progress 0 is last frame, progress 1 is frame 0
+      let frameIndex = Math.floor((1 - progress) * (totalFrames - 1));
+      if (isNaN(frameIndex)) frameIndex = 0;
+
+      if (frameIndex !== lastRenderedFrame) {
+        renderFrame(frameIndex);
+        lastRenderedFrame = frameIndex;
+      }
+
+      updateOverlays(progress);
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateAnimation);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Overlay logic based on ranges
+    const oIntro = document.getElementById('overlay-intro');
+    const oMid = document.getElementById('overlay-mid');
+    const oSpecs = document.getElementById('overlay-specs');
+    const oCta = document.getElementById('overlay-cta');
+    const oScroll = document.getElementById('scroll-indicator');
+
+    function calculateOpacity(progress, startIn, endIn, startOut, endOut) {
+      if (progress < startIn || progress > endOut) return 0;
+      if (progress >= endIn && progress <= startOut) return 1;
+      if (progress >= startIn && progress < endIn) {
+        return (progress - startIn) / (endIn - startIn);
+      }
+      if (progress > startOut && progress <= endOut) {
+        return 1 - ((progress - startOut) / (endOut - startOut));
+      }
+      return 0;
+    }
+
+    function updateOverlays(p) {
+      // Intro: 0-20%
+      oIntro.style.opacity = calculateOpacity(p, 0, 0, 0.15, 0.20);
+
+      // Mid: 25-45%
+      oMid.style.opacity = calculateOpacity(p, 0.25, 0.30, 0.40, 0.45);
+
+      // Specs: 70-90%
+      oSpecs.style.opacity = calculateOpacity(p, 0.70, 0.75, 0.85, 0.90);
+
+      // CTA: 88-100%
+      oCta.style.opacity = calculateOpacity(p, 0.88, 0.92, 1.0, 1.0);
+      oCta.style.pointerEvents = p > 0.88 ? 'auto' : 'none';
+
+      // Scroll Indicator: 0-3%
+      oScroll.style.opacity = calculateOpacity(p, 0, 0, 0.01, 0.03);
+    }
+
+    // Intersection Observer for Content Sections
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.content-section').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Start preload
+    preloadFrames();
+
+  </script>
+</body>
+
+</html>
