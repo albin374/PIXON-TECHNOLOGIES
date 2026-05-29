@@ -142,10 +142,33 @@
     /* Solutions Carousel */
     .solutions-scroll {
       display: flex;
-      gap: 2rem;
-      overflow-x: auto;
+      flex-direction: column;
+      gap: 1.5rem;
       padding-bottom: 2rem;
-      scroll-snap-type: x mandatory;
+    }
+    .solution-card {
+      width: 100%;
+      height: 250px;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+      background: linear-gradient(to bottom, rgba(2,11,24,0), rgba(2,11,24,0.9)), url('https://images.unsplash.com/photo-1555529771-835f59fc5efe?auto=format&fit=crop&q=80&w=800') center/cover;
+    }
+    @media (min-width: 768px) {
+      .solutions-scroll {
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+      }
+      .solution-card { 
+        min-width: 600px;
+        height: 400px;
+        scroll-snap-align: center;
+        padding: 2rem;
+      }
     }
     .solutions-scroll::-webkit-scrollbar {
       height: 8px;
@@ -157,21 +180,6 @@
     .solutions-scroll::-webkit-scrollbar-thumb {
       background: var(--blue-primary);
       border-radius: 4px;
-    }
-    .solution-card {
-      min-width: 80vw;
-      height: 400px;
-      scroll-snap-align: center;
-      border-radius: var(--radius-md);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-      padding: 2rem;
-      background: linear-gradient(to bottom, rgba(2,11,24,0), rgba(2,11,24,0.9)), url('https://digitaluniq.com/wp-content/uploads/2023/12/indoor-led-display.jpg') center/cover;
-    }
-    @media (min-width: 768px) {
-      .solution-card { min-width: 600px; }
     }
     .solution-content {
       position: relative;
@@ -387,13 +395,13 @@
           <p class="text-muted">Transform storefronts with dynamic LED advertising.</p>
         </div>
       </div>
-      <div class="solution-card" style="background-image: linear-gradient(to bottom, rgba(2,11,24,0), rgba(2,11,24,0.9)), url('https://digitaluniq.com/wp-content/uploads/2023/12/conference-room-led.jpg');">
+      <div class="solution-card" style="background-image: linear-gradient(to bottom, rgba(2,11,24,0), rgba(2,11,24,0.9)), url('https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&q=80&w=800');">
         <div class="solution-content">
           <h3>Corporate & Conference Rooms</h3>
           <p class="text-muted">Seamless video walls for impactful presentations.</p>
         </div>
       </div>
-      <div class="solution-card" style="background-image: linear-gradient(to bottom, rgba(2,11,24,0), rgba(2,11,24,0.9)), url('https://digitaluniq.com/wp-content/uploads/2023/12/rental-led-display.jpg');">
+      <div class="solution-card" style="background-image: linear-gradient(to bottom, rgba(2,11,24,0), rgba(2,11,24,0.9)), url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800');">
         <div class="solution-content">
           <h3>Events & Rental Displays</h3>
           <p class="text-muted">Modular screens for concerts, exhibitions, and weddings.</p>

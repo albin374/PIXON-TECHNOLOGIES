@@ -16,15 +16,21 @@
     .solution-split {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1.5rem;
       align-items: center;
     }
     .solution-img {
       width: 100%;
-      height: 250px;
+      height: 300px;
       border-radius: var(--radius-lg);
       object-fit: cover;
       box-shadow: var(--glow-md);
+    }
+    .solution-text h2 {
+      font-size: 2rem;
+    }
+    .solution-text p, .solution-text ul {
+      font-size: 1.1rem;
     }
     @media(min-width: 768px) {
       .solution-section {
