@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Projects | Pixon Technologies</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    .masonry-grid {
+      column-count: 1;
+      column-gap: 2rem;
+      padding: 4rem 0;
+    }
+    @media(min-width: 768px) { .masonry-grid { column-count: 2; } }
+    @media(min-width: 1024px) { .masonry-grid { column-count: 3; } }
+    
+    .project-card {
+      break-inside: avoid;
+      margin-bottom: 2rem;
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .project-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .project-overlay {
+      position: absolute;
+      bottom: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to top, rgba(2,11,24,0.9), transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .project-card:hover .project-overlay {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">PIXON<span class="dot">.</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container" style="padding-top: 150px; text-align: center;">
+    <h1 class="reveal">Our Portfolio</h1>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;" class="reveal">
+      <button class="btn btn-outline" style="border-color: var(--blue-light); color: var(--blue-light);">All</button>
+      <button class="btn btn-outline">UAE</button>
+      <button class="btn btn-outline">MENA</button>
+      <button class="btn btn-outline">Retail</button>
+      <button class="btn btn-outline">Events</button>
+    </div>
+  </header>
+
+  <section class="container masonry-grid">
+    <div class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1542491415-eb487ab8c983?auto=format&fit=crop&q=80&w=800" class="project-img" alt="Dubai Mall Retail Store">
+      <div class="project-overlay">
+        <h3>Dubai Mall Retail Store</h3>
+        <p class="text-blue">Indoor LED, P2.5</p>
+      </div>
+    </div>
+    
+    <div class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" class="project-img" alt="GITEX Technology Week">
+      <div class="project-overlay">
+        <h3>GITEX Technology Week</h3>
+        <p class="text-blue">Rental LED, Events</p>
+      </div>
+    </div>
+    
+    <div class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=800" class="project-img" alt="Corporate HQ Boardroom">
+      <div class="project-overlay">
+        <h3>Corporate HQ Boardroom</h3>
+        <p class="text-blue">Indoor LED, Video Wall</p>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1512632578888-169bbbc64f33?auto=format&fit=crop&q=80&w=800" class="project-img" alt="Burj Khalifa Projection">
+      <div class="project-overlay">
+        <h3>Downtown Dubai Billboard</h3>
+        <p class="text-blue">Outdoor LED, P4</p>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800" class="project-img" alt="MENA Esports Tournament">
+      <div class="project-overlay">
+        <h3>MENA Esports Arena</h3>
+        <p class="text-blue">High Refresh Rate LED</p>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800" class="project-img" alt="Expo Pavilion">
+      <div class="project-overlay">
+        <h3>Creative Tech Pavilion</h3>
+        <p class="text-blue">Transparent & Flexible LED</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Solutions | Pixon Technologies</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    .solution-section {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      padding: 5rem 0;
+    }
+    .solution-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    @media(min-width: 992px) {
+      .solution-split { grid-template-columns: 1fr 1fr; }
+      .solution-section:nth-child(even) .solution-img { order: 2; }
+      .solution-section:nth-child(even) .solution-text { order: 1; }
+    }
+    .solution-img {
+      width: 100%;
+      height: 500px;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      box-shadow: var(--glow-md);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">PIXON<span class="dot">.</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="solutions.html" class="active">Solutions</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container" style="padding-top: 150px; text-align: center;">
+    <h1 class="reveal">Our Solutions</h1>
+    <p class="text-muted reveal">Tailored visual experiences for every industry.</p>
+  </section>
+
+  <div class="solution-section">
+    <div class="container solution-split">
+      <img src="https://images.unsplash.com/photo-1555529771-835f59fc5efe?auto=format&fit=crop&q=80&w=800" class="solution-img reveal" alt="Retail Signage">
+      <div class="solution-text reveal">
+        <h2>Retail & Digital Signage</h2>
+        <p class="text-muted mb-3">Transform storefronts with dynamic LED advertising. Engage customers with vibrant, high-resolution visuals that bring your brand to life. From window displays to in-store video walls, we provide complete solutions.</p>
+        <ul style="margin-bottom: 2rem;">
+          <li>✓ High Brightness</li>
+          <li>✓ Custom Shapes</li>
+          <li>✓ Easy Content Management</li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary">Learn More</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="solution-section" style="background: var(--bg-secondary);">
+    <div class="container solution-split">
+      <img src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&q=80&w=800" class="solution-img reveal" alt="Corporate">
+      <div class="solution-text reveal">
+        <h2>Corporate & Conference</h2>
+        <p class="text-muted mb-3">Seamless video walls for impactful presentations. Upgrade your boardrooms and lobbies with state-of-the-art displays that facilitate communication and impress clients.</p>
+        <ul style="margin-bottom: 2rem;">
+          <li>✓ Ultra-fine Pixel Pitch</li>
+          <li>✓ Wireless Casting</li>
+          <li>✓ Anti-Glare Surface</li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary">Learn More</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="solution-section">
+    <div class="container solution-split">
+      <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" class="solution-img reveal" alt="Events">
+      <div class="solution-text reveal">
+        <h2>Events & Entertainment</h2>
+        <p class="text-muted mb-3">Deliver unforgettable experiences with massive, high-impact rental LED displays for concerts, exhibitions, and live events. Fast installation and ultimate reliability.</p>
+        <ul style="margin-bottom: 2rem;">
+          <li>✓ Quick Setup & Teardown</li>
+          <li>✓ High Refresh Rate for Cameras</li>
+          <li>✓ Robust & Weatherproof Options</li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary">Learn More</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="solution-section" style="background: var(--bg-secondary);">
+    <div class="container solution-split">
+      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="solution-img reveal" alt="Control Rooms">
+      <div class="solution-text reveal">
+        <h2>Command & Control Rooms</h2>
+        <p class="text-muted mb-3">Mission-critical displays engineered for 24/7 operation. Monitor vast amounts of data across seamless, high-resolution video walls with zero latency and perfect clarity.</p>
+        <ul style="margin-bottom: 2rem;">
+          <li>✓ 24/7 Uninterrupted Operation</li>
+          <li>✓ Redundant Power Systems</li>
+          <li>✓ Micro-LED Technology</li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary">Learn More</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="solution-section">
+    <div class="container solution-split">
+      <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800" class="solution-img reveal" alt="Creative Immersive">
+      <div class="solution-text reveal">
+        <h2>Creative & Immersive Spaces</h2>
+        <p class="text-muted mb-3">Push the boundaries of visual design with flexible, transparent, and custom-shaped LED modules. Perfect for museums, immersive art galleries, and architectural installations.</p>
+        <ul style="margin-bottom: 2rem;">
+          <li>✓ Flexible & Curvable Modules</li>
+          <li>✓ Transparent Glass LED</li>
+          <li>✓ 3D Naked-Eye Displays</li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary">Learn More</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

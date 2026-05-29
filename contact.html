@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us | Pixon Technologies</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4rem;
+      padding: 4rem 0;
+    }
+    @media(min-width: 992px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      transition: var(--transition);
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--blue-light);
+      box-shadow: var(--glow-sm);
+    }
+    .info-card {
+      background: var(--bg-card);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-accent);
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">PIXON<span class="dot">.</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container" style="padding-top: 150px;">
+    <h1 class="reveal">Get in Touch</h1>
+    <p class="text-muted reveal">We're here to help illuminate your space. Contact us for a quote.</p>
+  </header>
+
+  <section class="container contact-grid">
+    <div class="reveal">
+      <form class="product-card">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Name *" required>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Email *" required>
+        </div>
+        <div class="form-group">
+          <input type="tel" class="form-control" placeholder="Phone *" required>
+        </div>
+        <div class="form-group">
+          <select class="form-control">
+            <option>Interested in...</option>
+            <option>Indoor LED</option>
+            <option>Outdoor LED</option>
+            <option>Rental Services</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" rows="5" placeholder="Message *" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+      </form>
+    </div>
+    <div class="reveal">
+      <div class="info-card">
+        <h3 class="mb-3">Contact Information</h3>
+        <p class="mb-2"><strong>Address:</strong> Office MF/36, Malik Mohammed Obaid Mohammed Al Badoor, Deira – Naif, Dubai, UAE</p>
+        <p class="mb-2"><strong>Phone:</strong> <a href="tel:+971527151940" class="text-blue">+971 52 715 1940</a></p>
+        <p class="mb-2"><strong>Email:</strong> <a href="mailto:muhammedjazi@gmail.com" class="text-blue">muhammedjazi@gmail.com</a></p>
+        <p><strong>Hours:</strong> Sat–Thu 9:00 AM – 6:00 PM</p>
+      </div>
+      <a href="#" class="btn btn-whatsapp" style="display: block; text-align: center; padding: 1rem;">
+        Message us on WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

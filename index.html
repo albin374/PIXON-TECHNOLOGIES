@@ -1,753 +1,524 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PIXON TECHNOLOGIES | Smart Companion</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500&display=swap"
-    rel="stylesheet">
-
+  <title>Pixon Technologies — Illuminate the Future</title>
+  <meta name="description" content="Pixon Technologies L.L.C — Premium LED Screens, AV Equipment, Robotics & Smart Technology supplier in Dubai, UAE. Indoor & Outdoor LED displays, rental services, installation.">
+  <meta name="keywords" content="LED screen Dubai, LED display UAE, outdoor LED, indoor LED, AV equipment Dubai, video wall, digital signage, Pixon Technologies">
+  <meta property="og:title" content="Pixon Technologies — Illuminate the Future">
+  <meta property="og:image" content="assets/og-image.jpg">
+  <link rel="canonical" href="https://pixontechnologies.ae/">
+  
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
   <style>
-    :root {
-      --bg-color: #020813;
-      --text-color: #f0ece4;
-      --accent-color: #3b82f6;
-      /* Luxury Blue Theme */
-      --font-display: 'Playfair Display', serif;
-      --font-body: 'Outfit', sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: var(--font-body);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Noise & Vignette Overlays */
-    .noise-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.035;
-    }
-
-    .vignette-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 9998;
-      background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 100%);
-    }
-
-    /* Loader */
-    #loader {
-      position: fixed;
-      inset: 0;
-      background: var(--bg-color);
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 1s ease;
-    }
-
-    .loader-text {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-    }
-
-    .progress-track {
-      width: 200px;
-      height: 1px;
-      background: rgba(240, 236, 228, 0.2);
-    }
-
-    #progress-bar {
-      height: 100%;
-      width: 0%;
-      background: var(--accent-color);
-      transition: width 0.1s linear;
-      box-shadow: 0 0 10px var(--accent-color);
-    }
-
-    /* Navbar */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 2rem 4rem;
-      display: flex;
-      justify-content: space-between;
-      z-index: 1000;
-      mix-blend-mode: difference;
-    }
-
-    .brand {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    /* Buttons */
-    .btn {
-      padding: 1rem 2.5rem;
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--accent-color);
-      color: var(--text-color);
-      font-family: var(--font-body);
-      font-size: 0.8rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .btn:hover {
-      background: rgba(59, 130, 246, 0.1);
-      box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
-    }
-
-    /* Animation Section */
-    #animation-container {
-      height: 500vh;
+    /* Home Specific Styles */
+    .hero {
       position: relative;
-    }
-
-    #sticky-container {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
       overflow: hidden;
+      background: linear-gradient(to right, rgba(2, 11, 24, 0.95), rgba(2, 11, 24, 0.5)), url('media/banner.jpeg') center/cover no-repeat;
     }
-
-    canvas {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Overlays */
-    .scroll-overlay {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      opacity: 0;
-      will-change: opacity;
-    }
-
-    .headline {
-      font-family: var(--font-display);
-      font-size: 5vw;
-      font-weight: 400;
-      text-align: center;
-      background: linear-gradient(to bottom, var(--text-color), var(--accent-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .tagline {
-      font-size: 2vw;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      color: #94a3b8;
-      text-transform: uppercase;
-    }
-
-    .specs-overlay {
+    #particle-canvas {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
-      opacity: 0;
-      will-change: opacity;
+      z-index: 0;
     }
-
-    .spec-item {
-      position: absolute;
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 800px;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 5vw, 5rem);
+      margin-bottom: 1.5rem;
+      min-height: 120px; /* Space for typewriter */
+    }
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--blue-ice);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+    }
+    .hero-actions {
       display: flex;
-      align-items: center;
       gap: 1rem;
+      flex-wrap: wrap;
     }
-
-    .spec-item.left {
-      flex-direction: row-reverse;
+    .hero-badge {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      background: rgba(10, 37, 64, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-accent);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.9rem;
+      z-index: 10;
     }
-
-    .spec-line {
-      width: 40px;
-      height: 1px;
-      background: var(--accent-color);
-      box-shadow: 0 0 5px var(--accent-color);
-    }
-
-    .spec-text {
-      font-size: 0.8rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      max-width: 200px;
-      line-height: 1.4;
-      color: #cbd5e1;
-    }
-
-    .spec-text strong {
-      color: var(--text-color);
-      display: block;
-      margin-bottom: 0.2rem;
-    }
-
-    /* Positioning Specs */
-    .spec-1 {
-      top: 25%;
-      left: 10%;
-    }
-
-    .spec-2 {
-      top: 40%;
-      left: 15%;
-    }
-
-    .spec-3 {
-      top: 55%;
-      left: 8%;
-    }
-
-    .spec-4 {
-      top: 75%;
-      left: 12%;
-    }
-
-    .spec-5 {
-      top: 30%;
-      right: 12%;
-    }
-
-    .spec-6 {
-      top: 50%;
-      right: 8%;
-    }
-
-    .spec-7 {
-      top: 65%;
-      right: 15%;
-    }
-
-    /* Scroll Indicator */
     .scroll-indicator {
       position: absolute;
-      bottom: 3rem;
+      bottom: 2rem;
       left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      opacity: 1;
-      will-change: opacity;
+      z-index: 10;
+      color: var(--blue-light);
+      font-size: 1.5rem;
     }
-
-    .scroll-text {
-      font-size: 0.7rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: #888;
-    }
-
-    .scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--accent-color), transparent);
-    }
-
-    /* Content Sections */
-    .content-section {
-      padding: 10rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    
+    /* Stats Bar */
+    .stats-section {
+      background: linear-gradient(90deg, var(--bg-secondary), var(--bg-card));
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      padding: 3rem 0;
+      margin: -3rem auto 4rem auto;
+      max-width: 1100px;
+      width: 90%;
       position: relative;
+      z-index: 20;
+      box-shadow: 0 20px 40px rgba(2, 11, 24, 0.8);
     }
-
-    .content-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .divider {
-      width: 1px;
-      height: 100px;
-      background: rgba(255, 255, 255, 0.1);
-      margin: 0 auto;
-    }
-
-    .grid-container {
+    .stats-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .stat-number {
+      font-family: var(--font-mono);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--blue-light);
+      text-shadow: var(--glow-md);
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      color: var(--text-secondary);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
+
+    /* What we offer */
+    .offer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    @media (min-width: 768px) {
+      .offer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .offer-grid .card-wide {
+        grid-column: span 2;
+      }
+    }
+    @media (min-width: 1024px) {
+      .offer-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .offer-grid .card-wide {
+        grid-column: span 1;
+      }
+    }
+
+    /* Solutions Carousel */
+    .solutions-scroll {
+      display: flex;
+      gap: 2rem;
+      overflow-x: auto;
+      padding-bottom: 2rem;
+      scroll-snap-type: x mandatory;
+    }
+    .solutions-scroll::-webkit-scrollbar {
+      height: 8px;
+    }
+    .solutions-scroll::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+      border-radius: 4px;
+    }
+    .solutions-scroll::-webkit-scrollbar-thumb {
+      background: var(--blue-primary);
+      border-radius: 4px;
+    }
+    .solution-card {
+      min-width: 80vw;
+      height: 400px;
+      scroll-snap-align: center;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 2rem;
+      background: linear-gradient(to bottom, rgba(2,11,24,0), rgba(2,11,24,0.9)), url('https://digitaluniq.com/wp-content/uploads/2023/12/indoor-led-display.jpg') center/cover;
+    }
+    @media (min-width: 768px) {
+      .solution-card { min-width: 600px; }
+    }
+    .solution-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Why Pixon */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 4rem;
       align-items: center;
     }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 3rem;
-      margin-bottom: 2rem;
-      font-weight: 400;
+    @media (min-width: 992px) {
+      .why-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .feature-item {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .feature-number {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      color: var(--blue-light);
+      font-weight: 700;
+      opacity: 0.5;
+    }
+    .feature-text h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .feature-text p {
+      color: var(--text-secondary);
+    }
+    .led-art {
+      width: 100%;
+      height: 400px;
+      background: radial-gradient(circle at center, var(--bg-card), var(--bg-primary));
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: repeat(10, 1fr);
+      gap: 2px;
+      padding: 2rem;
+    }
+    .led-pixel {
+      background: rgba(56, 189, 248, 0.1);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+    .led-pixel:hover {
+      background: var(--blue-light);
+      box-shadow: var(--glow-sm);
     }
 
-    .section-text {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: #94a3b8;
-      font-weight: 300;
-    }
-
-    .highlight-text {
-      color: #3b82f6;
-      font-weight: 500;
-    }
-
-    .quote-section {
+    /* CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
       text-align: center;
-      padding: 8rem 2rem;
+      padding: 6rem 2rem;
+      border-top: 1px solid var(--border-accent);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(56, 189, 248, 0.1) 0%, transparent 60%);
+      pointer-events: none;
     }
 
-    .quote {
-      font-family: var(--font-display);
-      font-size: 2.5rem;
-      font-style: italic;
-      color: #f0ece4;
-      max-width: 800px;
-      margin: 0 auto 2rem;
-      line-height: 1.4;
-    }
-
-    .quote-author {
-      font-size: 0.85rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--accent-color);
-    }
-
-    .final-cta {
-      text-align: center;
-      padding: 8rem 2rem 12rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .specs-overlay {
-        display: none;
-      }
-
-      .grid-container {
-        grid-template-columns: 1fr;
-      }
-
-      nav {
-        padding: 1.5rem;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .headline {
-        font-size: 12vw;
-      }
-
-      .tagline {
-        font-size: 4vw;
-      }
-
-      .section-title {
-        font-size: 2.5rem;
-      }
-    }
   </style>
 </head>
-
 <body>
 
-  <!-- SVG Noise Filter -->
-  <svg width="0" height="0" style="display:none;">
-    <filter id="noiseFilter">
-      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-      <feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0" />
-    </filter>
-  </svg>
-  <div class="noise-overlay"
-    style="background: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');">
-  </div>
-  <div class="vignette-overlay"></div>
-
-  <!-- Loader -->
-  <div id="loader">
-    <div class="loader-text">PIXON </div>
-    <div class="progress-track">
-      <div id="progress-bar"></div>
-    </div>
-  </div>
-
-  <nav>
-    <div class="brand">PIXON</div>
-    <div class="nav-links">
-      <div>Design</div>
-      <div>Intelligence</div>
-      <div>Specs</div>
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">PIXON<span class="dot">.</span></a>
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="products.html">Products</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="lang-toggle">EN / AR</button>
+        <a href="contact.html" class="btn btn-whatsapp">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          WhatsApp
+        </a>
+      </div>
     </div>
   </nav>
 
-  <div id="animation-container">
-    <div id="sticky-container">
-      <canvas id="hero-canvas"></canvas>
-
-      <!-- 0-20% Overlay -->
-      <div id="overlay-intro" class="scroll-overlay">
-        <h1 class="headline">Presence, redefined.</h1>
-      </div>
-
-      <!-- 25-45% Overlay -->
-      <div id="overlay-mid" class="scroll-overlay">
-        <h2 class="tagline">Art meets intelligence.</h2>
-      </div>
-
-      <!-- 70-90% Specs Overlay -->
-      <div id="overlay-specs" class="specs-overlay">
-        <div class="spec-item spec-1 left">
-          <div class="spec-line"></div>
-          <div class="spec-text"><strong>Display Glass</strong>Tempered anti-glare, micro-etched</div>
-        </div>
-        <div class="spec-item spec-2 left">
-          <div class="spec-line"></div>
-          <div class="spec-text"><strong>Bezel Frame</strong>Precision-machined aluminum</div>
-        </div>
-        <div class="spec-item spec-3 left">
-          <div class="spec-line"></div>
-          <div class="spec-text"><strong>LED Matrix</strong>With electric teal status ring</div>
-        </div>
-        <div class="spec-item spec-4 left">
-          <div class="spec-line"></div>
-          <div class="spec-text"><strong>Logic Board</strong>Smart home SoC integration</div>
-        </div>
-
-        <div class="spec-item spec-5 right">
-          <div class="spec-line"></div>
-          <div class="spec-text"><strong>Speaker Grille</strong>Anodized aluminum mesh</div>
-        </div>
-        <div class="spec-item spec-6 right">
-          <div class="spec-line"></div>
-          <div class="spec-text"><strong>Rear Backing</strong>Premium Alcantara panel</div>
-        </div>
-        <div class="spec-item spec-7 right">
-          <div class="spec-line"></div>
-          <div class="spec-text"><strong>Mount</strong>Magnetic wall-mount base plate</div>
-        </div>
-      </div>
-
-      <!-- 88-100% Overlay -->
-      <div id="overlay-cta" class="scroll-overlay">
-        <a href="#discover" class="btn pointer-auto">Discover Pixon</a>
-      </div>
-
-      <!-- Scroll Indicator -->
-      <div id="scroll-indicator" class="scroll-indicator">
-        <div class="scroll-text">Scroll to explore</div>
-        <div class="scroll-line"></div>
-      </div>
-
+  <!-- Hero Section -->
+  <header class="hero">
+    <canvas id="particle-canvas"></canvas>
+    <div class="beam-container">
+      <div class="beam beam-1"></div>
+      <div class="beam beam-2"></div>
+      <div class="beam beam-3"></div>
     </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <section class="content-section" id="discover">
-    <div class="grid-container">
-      <div>
-        <h3 class="section-title">A Symphony of Materials</h3>
-        <p class="section-text">
-          Crafted to merge seamlessly into your sanctuary. Pixon isn't just a smart display—it's a kinetic sculpture.
-          Encased in an <span class="highlight-text">anodized aluminum deep charcoal chassis</span> with a soft
-          Alcantara back, it speaks the language of contemporary luxury.
-        </p>
+    
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title" id="typewriter"></h1>
+        <p class="hero-subtitle reveal">Premium LED Displays, Smart Technology & AV Solutions for the UAE and MENA.</p>
+        <div class="hero-actions reveal">
+          <a href="products.html" class="btn btn-primary">Explore Products &rarr;</a>
+          <a href="#" class="btn btn-outline">Watch Showreel &#9654;</a>
+        </div>
       </div>
-      <div>
-        <!-- Placeholder for structural balance -->
+    </div>
+    
+
+    <div class="scroll-indicator bounce">
+      &darr;
+    </div>
+  </header>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item reveal">
+          <div class="stat-number" data-target="500">0</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="stat-number" data-target="10">0</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="stat-number" data-target="50">0</div>
+          <div class="stat-label">Global Brands</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="stat-number" data-target="24">0</div>
+          <div class="stat-label">Hours Support</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="divider"></div>
+  <!-- What We Offer -->
+  <section class="container">
+    <h2 class="mb-4 reveal">What We Offer</h2>
+    <div class="offer-grid">
+      <a href="products.html" class="product-card reveal">
+        <img src="https://ledhouseonline.com/wp-content/uploads/2020/09/indoor-led-display-1.png" alt="Indoor LED" class="card-icon" style="border-radius: 8px;">
+        <h3>Indoor LED Screens</h3>
+        <p class="text-muted">High-resolution displays for retail, corporate, and events.</p>
+      </a>
+      <a href="products.html" class="product-card reveal">
+        <img src="https://ledhouseonline.com/wp-content/uploads/2020/09/outdoor-led-display.png" alt="Outdoor LED" class="card-icon" style="border-radius: 8px;">
+        <h3>Outdoor LED Screens</h3>
+        <p class="text-muted">Weatherproof, ultra-bright displays for billboards and stadiums.</p>
+      </a>
+      <a href="products.html" class="product-card reveal card-wide">
+        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=200" alt="Robotics" class="card-icon" style="border-radius: 8px; object-fit: cover;">
+        <h3>Robotics & Smart Machines</h3>
+        <p class="text-muted">Automated solutions for modern hospitality and smart cities.</p>
+      </a>
+      <a href="products.html" class="product-card reveal">
+        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=200" alt="Computers" class="card-icon" style="border-radius: 8px; object-fit: cover;">
+        <h3>Computer Systems & Software</h3>
+        <p class="text-muted">High-performance computing and custom software solutions.</p>
+      </a>
+      <a href="products.html" class="product-card reveal">
+        <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=200" alt="Audio-Visual" class="card-icon" style="border-radius: 8px; object-fit: cover;">
+        <h3>Audio-Visual Equipment</h3>
+        <p class="text-muted">Professional audio and control systems for any environment.</p>
+      </a>
+      <a href="products.html" class="product-card reveal">
+        <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&q=80&w=200" alt="Gaming" class="card-icon" style="border-radius: 8px; object-fit: cover;">
+        <h3>Video Games & Consoles</h3>
+        <p class="text-muted">Premium gaming hardware and immersive setups.</p>
+      </a>
+      <a href="products.html" class="product-card reveal">
+        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80&w=200" alt="Music" class="card-icon" style="border-radius: 8px; object-fit: cover;">
+        <h3>Musical Instruments</h3>
+        <p class="text-muted">Professional-grade instruments and studio gear.</p>
+      </a>
+    </div>
+  </section>
 
-  <section class="content-section">
-    <div class="grid-container">
-      <div>
-        <!-- Placeholder for structural balance -->
+  <!-- Featured Solutions -->
+  <section class="container">
+    <h2 class="mb-4 reveal">Featured Solutions</h2>
+    <div class="solutions-scroll reveal">
+      <div class="solution-card">
+        <div class="solution-content">
+          <h3>Retail & Digital Signage</h3>
+          <p class="text-muted">Transform storefronts with dynamic LED advertising.</p>
+        </div>
       </div>
-      <div>
-        <h3 class="section-title">Silent Intelligence</h3>
-        <p class="section-text">
-          A perfectly square <span class="highlight-text">180mm × 180mm × 14mm</span> face with softly chamfered
-          perimeters. Look closely at the lower-right corner of the bezel: a small robot silhouette, laser-etched into
-          the glass, awakens and breathes in electric teal when Pixon awaits your command.
-        </p>
+      <div class="solution-card" style="background-image: linear-gradient(to bottom, rgba(2,11,24,0), rgba(2,11,24,0.9)), url('https://digitaluniq.com/wp-content/uploads/2023/12/conference-room-led.jpg');">
+        <div class="solution-content">
+          <h3>Corporate & Conference Rooms</h3>
+          <p class="text-muted">Seamless video walls for impactful presentations.</p>
+        </div>
+      </div>
+      <div class="solution-card" style="background-image: linear-gradient(to bottom, rgba(2,11,24,0), rgba(2,11,24,0.9)), url('https://digitaluniq.com/wp-content/uploads/2023/12/rental-led-display.jpg');">
+        <div class="solution-content">
+          <h3>Events & Rental Displays</h3>
+          <p class="text-muted">Modular screens for concerts, exhibitions, and weddings.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <section class="content-section quote-section">
-    <p class="quote">"Technology should calm the room, not clutter it. It should be felt before it is seen."</p>
-    <div class="quote-author">The Design Philosophy</div>
+  <!-- Why Pixon -->
+  <section class="container">
+    <div class="why-grid">
+      <div class="why-content">
+        <h2 class="mb-4 reveal">Why Choose Pixon?</h2>
+        <div class="feature-list">
+          <div class="feature-item reveal">
+            <div class="feature-number">01</div>
+            <div class="feature-text">
+              <h4>Certified Dubai Business</h4>
+              <p>Fully licensed by the Dubai Department of Economic Development.</p>
+            </div>
+          </div>
+          <div class="feature-item reveal">
+            <div class="feature-number">02</div>
+            <div class="feature-text">
+              <h4>MENA Coverage</h4>
+              <p>Supplying and installing across the UAE and the broader MENA region.</p>
+            </div>
+          </div>
+          <div class="feature-item reveal">
+            <div class="feature-number">03</div>
+            <div class="feature-text">
+              <h4>End-to-End Service</h4>
+              <p>From consultation and supply to installation and maintenance.</p>
+            </div>
+          </div>
+          <div class="feature-item reveal">
+            <div class="feature-number">04</div>
+            <div class="feature-text">
+              <h4>24/7 Support</h4>
+              <p>Round-the-clock technical support to ensure zero downtime.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="led-art reveal" id="led-grid">
+        <!-- Generated by JS -->
+      </div>
+    </div>
   </section>
 
-  <section class="content-section final-cta">
-    <h3 class="section-title">Bring Pixon Home.</h3>
-    <a href="#" class="btn">Reserve Now</a>
+  <!-- Client Logos Strip -->
+  <section class="container" style="padding: 2rem 0;">
+    <div class="marquee-container">
+      <div class="marquee-track">
+        <img src="https://cdn.simpleicons.org/samsung/white" alt="Samsung" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+        <img src="https://cdn.simpleicons.org/microsoft/white" alt="Microsoft" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+        <img src="https://cdn.simpleicons.org/sony/white" alt="Sony" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+        <img src="https://cdn.simpleicons.org/panasonic/white" alt="Panasonic" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+        <img src="https://cdn.simpleicons.org/lg/white" alt="LG" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+        <img src="https://cdn.simpleicons.org/cisco/white" alt="Cisco" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+        <img src="https://cdn.simpleicons.org/intel/white" alt="Intel" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+        <img src="https://cdn.simpleicons.org/nvidia/white" alt="Nvidia" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+        <!-- Repeat for continuous scroll -->
+        <img src="https://cdn.simpleicons.org/samsung/white" alt="Samsung" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+        <img src="https://cdn.simpleicons.org/microsoft/white" alt="Microsoft" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+        <img src="https://cdn.simpleicons.org/sony/white" alt="Sony" style="height: 40px; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+      </div>
+    </div>
   </section>
 
-  <script>
-    const canvas = document.getElementById('hero-canvas');
-    const ctx = canvas.getContext('2d');
-    const frames = [];
-    let totalFrames = 0;
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <div class="container reveal">
+      <h2 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: var(--glow-md);">Ready to Illuminate Your Space?</h2>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="contact.html" class="btn btn-primary">Get a Free Quote</a>
+        <a href="tel:+971527151940" class="btn btn-outline">Call Us Now</a>
+      </div>
+    </div>
+  </section>
 
-    // Resize canvas
-    function resizeCanvas() {
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      ctx.scale(dpr, dpr);
-      renderFrame(Math.floor((1 - getScrollProgress()) * (totalFrames - 1)));
-    }
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="logo mb-2" style="display: block;">PIXON<span class="dot">.</span></a>
+          <p class="text-muted mb-2">Illuminate the Future.</p>
+          <p class="text-muted text-sm">Office MF/36, Deira – Naif, Dubai, UAE</p>
+        </div>
+        <div class="footer-col">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="products.html">Indoor LED</a></li>
+            <li><a href="products.html">Outdoor LED</a></li>
+            <li><a href="products.html">Robotics</a></li>
+            <li><a href="products.html">AV Equipment</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">Installation</a></li>
+            <li><a href="services.html">LED Rental</a></li>
+            <li><a href="services.html">Maintenance</a></li>
+            <li><a href="services.html">Consultation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+971527151940">+971 52 715 1940</a></li>
+            <li><a href="mailto:muhammedjazi@gmail.com">muhammedjazi@gmail.com</a></li>
+          </ul>
+          <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <a href="#" style="color: var(--blue-light);"><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+            <!-- Instagram, YouTube etc -->
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Pixon Technologies L.L.C | Dubai, UAE
+      </div>
+    </div>
+  </footer>
 
-    window.addEventListener('resize', resizeCanvas);
-
-    // Dynamic frame loading detection
-    async function preloadFrames() {
-      let index = 1;
-      let loading = true;
-      let maxFailures = 3; // Tolerance for skipped frames
-      let failures = 0;
-      let batchSize = 5; // Load in small batches to test existence quickly, but we will do sequential for accurate count
-
-      const progressBar = document.getElementById('progress-bar');
-
-      while (loading && index < 600) {
-        const paddedIndex = index.toString().padStart(3, '0');
-        const imgPath = `Smart_display_frames/Smart_display_${paddedIndex}.png`;
-
-        try {
-          const img = await new Promise((resolve, reject) => {
-            const image = new Image();
-            image.onload = () => resolve(image);
-            image.onerror = () => reject();
-            image.src = imgPath;
-          });
-
-          frames.push(img);
-          failures = 0;
-
-          // Fake progress based on an assumed 120 frames
-          let prog = Math.min((frames.length / 120) * 100, 95);
-          progressBar.style.width = `${prog}%`;
-
-        } catch (e) {
-          failures++;
-          if (failures >= maxFailures) {
-            loading = false;
-          }
-        }
-        index++;
-      }
-
-      totalFrames = frames.length;
-      progressBar.style.width = `100%`;
-
-      if (totalFrames === 0) {
-        console.warn("No frames loaded. Ensure files are named Smart_display_001.png, Smart_display_002.png, etc. in the same directory.");
-        // We push a dummy to avoid breaking
-        totalFrames = 1;
-      }
-
-      setTimeout(() => {
-        document.getElementById('loader').style.opacity = 0;
-        setTimeout(() => document.getElementById('loader').style.display = 'none', 1000);
-        resizeCanvas(); // Initial setup
-        requestAnimationFrame(updateAnimation);
-      }, 500);
-    }
-
-    // Scroll calculations
-    function getScrollProgress() {
-      const animationContainer = document.getElementById('animation-container');
-      const scrollTop = window.scrollY - animationContainer.offsetTop;
-      const maxScroll = animationContainer.scrollHeight - window.innerHeight;
-      let progress = scrollTop / maxScroll;
-      return Math.max(0, Math.min(1, progress)); // Clamp 0-1
-    }
-
-    // Render frame
-    function renderFrame(frameIndex) {
-      if (totalFrames === 0 || !frames[frameIndex]) return;
-
-      const img = frames[frameIndex];
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-
-      // Background fill to prevent flicker
-      ctx.fillStyle = '#020813';
-      ctx.fillRect(0, 0, w, h);
-
-      // Calculate aspect ratio cover
-      const imgRatio = img.width / img.height;
-      const canvasRatio = w / h;
-
-      let drawW, drawH, drawX, drawY;
-
-      if (canvasRatio > imgRatio) {
-        drawW = w;
-        drawH = w / imgRatio;
-        drawX = 0;
-        drawY = (h - drawH) / 2;
-      } else {
-        drawW = h * imgRatio;
-        drawH = h;
-        drawX = (w - drawW) / 2;
-        drawY = 0;
-      }
-
-      ctx.drawImage(img, drawX, drawY, drawW, drawH);
-    }
-
-    // Animation loop
-    let lastRenderedFrame = -1;
-    let ticking = false;
-
-    function updateAnimation() {
-      const progress = getScrollProgress();
-
-      // Reverse playback: progress 0 is last frame, progress 1 is frame 0
-      let frameIndex = Math.floor((1 - progress) * (totalFrames - 1));
-      if (isNaN(frameIndex)) frameIndex = 0;
-
-      if (frameIndex !== lastRenderedFrame) {
-        renderFrame(frameIndex);
-        lastRenderedFrame = frameIndex;
-      }
-
-      updateOverlays(progress);
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(updateAnimation);
-        ticking = true;
-      }
-    }, { passive: true });
-
-    // Overlay logic based on ranges
-    const oIntro = document.getElementById('overlay-intro');
-    const oMid = document.getElementById('overlay-mid');
-    const oSpecs = document.getElementById('overlay-specs');
-    const oCta = document.getElementById('overlay-cta');
-    const oScroll = document.getElementById('scroll-indicator');
-
-    function calculateOpacity(progress, startIn, endIn, startOut, endOut) {
-      if (progress < startIn || progress > endOut) return 0;
-      if (progress >= endIn && progress <= startOut) return 1;
-      if (progress >= startIn && progress < endIn) {
-        return (progress - startIn) / (endIn - startIn);
-      }
-      if (progress > startOut && progress <= endOut) {
-        return 1 - ((progress - startOut) / (endOut - startOut));
-      }
-      return 0;
-    }
-
-    function updateOverlays(p) {
-      // Intro: 0-20%
-      oIntro.style.opacity = calculateOpacity(p, 0, 0, 0.15, 0.20);
-
-      // Mid: 25-45%
-      oMid.style.opacity = calculateOpacity(p, 0.25, 0.30, 0.40, 0.45);
-
-      // Specs: 70-90%
-      oSpecs.style.opacity = calculateOpacity(p, 0.70, 0.75, 0.85, 0.90);
-
-      // CTA: 88-100%
-      oCta.style.opacity = calculateOpacity(p, 0.88, 0.92, 1.0, 1.0);
-      oCta.style.pointerEvents = p > 0.88 ? 'auto' : 'none';
-
-      // Scroll Indicator: 0-3%
-      oScroll.style.opacity = calculateOpacity(p, 0, 0, 0.01, 0.03);
-    }
-
-    // Intersection Observer for Content Sections
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.content-section').forEach(section => {
-      observer.observe(section);
-    });
-
-    // Start preload
-    preloadFrames();
-
-  </script>
+  <script src="js/particles.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
 </body>
-
 </html>

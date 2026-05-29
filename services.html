@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Services | Pixon Technologies</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    @media(min-width: 768px) { .service-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(min-width: 1024px) { .service-grid { grid-template-columns: repeat(3, 1fr); } }
+    
+    .timeline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      margin: 4rem 0;
+      overflow-x: auto;
+      padding-bottom: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--border-accent);
+      z-index: 1;
+    }
+    .timeline-step {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      min-width: 120px;
+    }
+    .timeline-dot {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid var(--blue-light);
+      margin: 0 auto 1rem;
+      display: grid;
+      place-items: center;
+      color: var(--blue-light);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">PIXON<span class="dot">.</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="services.html" class="active">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container" style="padding-top: 150px;">
+    <h1 class="reveal text-center mb-4">Our Services</h1>
+    <div class="service-grid">
+      <div class="product-card reveal">
+        <h3>Supply & Distribution</h3>
+        <p class="text-muted">Supplying premium LED & AV products across the UAE and MENA.</p>
+      </div>
+      <div class="product-card reveal">
+        <h3>Installation & Commissioning</h3>
+        <p class="text-muted">Professional, safe, and precise on-site setup by our expert team.</p>
+      </div>
+      <div class="product-card reveal">
+        <h3>LED Rental</h3>
+        <p class="text-muted">Flexible rental solutions for events, exhibitions, and concerts.</p>
+      </div>
+      <div class="product-card reveal">
+        <h3>Maintenance & Repair</h3>
+        <p class="text-muted">Comprehensive Annual Maintenance Contracts (AMC) and quick repair services.</p>
+      </div>
+      <div class="product-card reveal">
+        <h3>Custom Fabrication</h3>
+        <p class="text-muted">Bespoke LED shapes, curved screens, and creative builds tailored to your space.</p>
+      </div>
+      <div class="product-card reveal">
+        <h3>Consultation</h3>
+        <p class="text-muted">Free site surveys, technical advisory, and ROI analysis.</p>
+      </div>
+    </div>
+
+    <h2 class="reveal mt-5 mb-4" style="margin-top: 5rem;">Our Process</h2>
+    <div class="timeline reveal">
+      <div class="timeline-step">
+        <div class="timeline-dot">1</div>
+        <h4>Consult</h4>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot">2</div>
+        <h4>Design</h4>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot">3</div>
+        <h4>Supply</h4>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot">4</div>
+        <h4>Install</h4>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot">5</div>
+        <h4>Support</h4>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
