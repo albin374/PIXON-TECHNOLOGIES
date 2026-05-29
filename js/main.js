@@ -23,6 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Mobile Menu Toggle
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  if (mobileBtn && navbar) {
+    mobileBtn.addEventListener('click', () => {
+      navbar.classList.toggle('nav-open');
+    });
+  }
+
   // Product Filtering Logic
   const filterPills = document.querySelectorAll('.filter-pill');
   const productCards = document.querySelectorAll('.product-card');
