@@ -89,8 +89,8 @@
     display: flex;
   }
 
-  /* Non-sticky header on mobile for all pages EXCEPT home */
-  body:not(.home-page) .navbar {
+  /* Non-sticky header on mobile for all pages */
+  .navbar {
     position: absolute !important;
   }
 }
